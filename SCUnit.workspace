@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="SCUnit" Database="" Version="10.0.0">
+  <Project Name="SCUnit" Path="SCUnit/SCUnit.project" Active="No"/>
+  <Project Name="SCUnitTest" Path="SCUnitTest/SCUnitTest.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="SCUnit" ConfigName="Debug"/>
+      <Project Name="SCUnitTest" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="yes">
+      <Environment/>
+      <Project Name="SCUnit" ConfigName="Release"/>
+      <Project Name="SCUnitTest" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>

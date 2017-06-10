@@ -1,0 +1,1 @@
+./Debug/scu_test.c.o ./Debug/scu_suite.c.o ./Debug/scunit.c.o   
