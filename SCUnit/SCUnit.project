@@ -11,12 +11,14 @@
     <File Name="scu_test.c"/>
     <File Name="scu_suite.c"/>
     <File Name="scunit.c"/>
+    <File Name="scu_assert.c"/>
   </VirtualDirectory>
   <VirtualDirectory Name="include">
     <File Name="scu_types.h"/>
     <File Name="scu_errors.h"/>
     <File Name="scu_functions.h"/>
     <File Name="scunit.h"/>
+    <File Name="scu_assert.h"/>
   </VirtualDirectory>
   <Settings Type="Static Library">
     <GlobalSettings>

@@ -23,9 +23,9 @@
 #include "scunit.h"
 
 
-static void SCU_TestSuite_printAction(SCU_TestSuite *pSuite, const char *pAction, scu_bool printNewline) {
+static void SCU_TestSuite_printAction(SCU_TestSuite *pSuite, const char *pAction, SCU_bool printNewline) {
     if(SCU_runMode == SCU_RUN_MODE_VERBOSE) {
-        printf("%s suite '%s'", pAction, pSuite->pName);
+        printf("%s test suite '%s'", pAction, pSuite->pName);
         if(printNewline)
             putchar('\n');
         else
@@ -58,51 +58,58 @@ SCU_TestSuite *SCU_TestSuite_create(const char *pName, SCU_SetUpFunc fpSetUp, SC
 }
 
 SCU_error SCU_TestSuite_execute(SCU_TestSuite *pSuite) {
-    SCU_error error = SCU_SUCCES;
+    SCU_error error = SCU_SUCCESS;
 
-    if(!pSuite)
-        SCU_printError(error = SCU_ERROR_NULL_POINTER);
-    if(SCU_NONFATAL_ERROR(error) && pSuite->fpSetUp) {
+    if(!pSuite) {
+        SCU_printError(SCU_ERROR_NULL_POINTER);
+        return SCU_ERROR_NULL_POINTER;
+    }
+    if(pSuite->fpSetUp) {
         SCU_TestSuite_printAction(pSuite, "Setup", SCU_FALSE);
-        pSuite->result = error = pSuite->fpSetUp();
+        error = pSuite->fpSetUp();
         SCU_printError(error);
+        if(SCU_FATAL_ERROR(error))
+            return (pSuite->result = error);
     }
-    if(SCU_NONFATAL_ERROR(error)) {
-        SCU_TestSuite_printAction(pSuite, "Running", SCU_TRUE);
-        pSuite->succeeded = 0;
-        pSuite->failed = 0;
-        SCU_TestCase *pCase = pSuite->pTestCase;
-        do {
-            pCase = pCase->pNext;
-            pSuite->result = error = SCU_TestCase_execute(pCase);
-            if(error == SCU_SUCCES)
-                ++(pSuite->succeeded);
-            else {
-                ++(pSuite->failed);
-                if(SCU_FATAL_ERROR(error))
-                    return error;
-            }
-        } while(pCase != pSuite->pTestCase);
-        if(pSuite->failed > 0)
-            pSuite->result = error = SCU_ERROR_FAILED;
-        if(SCU_runMode == SCU_RUN_MODE_NORMAL)
-            printf("%-20s | %04d | %04d | %04d\n",
-                pSuite->pName,
-                pSuite->cases,
-                pSuite->succeeded,
-                pSuite->failed);
-        else if(SCU_runMode == SCU_RUN_MODE_VERBOSE)
-            printf("Suite '%s' => total of %d tests of which %d succeeded and %d failed\n",
-                pSuite->pName,
-                pSuite->cases,
-                pSuite->succeeded,
-                pSuite->failed);
-    }
-    if(SCU_NONFATAL_ERROR(error) && pSuite->fpTearDown) {
-        SCU_TestSuite_printAction(pSuite, "Tear down", SCU_FALSE);
-        pSuite->result = error = pSuite->fpTearDown();
-        SCU_printError(error);
-    }
+    
+    SCU_TestSuite_printAction(pSuite, "Running", SCU_TRUE);
+    pSuite->succeeded = 0;
+    pSuite->failed = 0;
+    SCU_currentTestCase = pSuite->pTestCase;
+    do {
+        SCU_currentTestCase = SCU_currentTestCase->pNext;
+        error = SCU_TestCase_execute(SCU_currentTestCase);
+        if(error == SCU_SUCCESS)
+            ++(pSuite->succeeded);
+        else {
+            ++(pSuite->failed);
+            if(SCU_FATAL_ERROR(error))
+                return (pSuite->result = error);
+        }
+    } while(SCU_currentTestCase != pSuite->pTestCase);
+    SCU_currentTestCase = NULL;
 
-    return error;
+    if(SCU_runMode == SCU_RUN_MODE_NORMAL)
+        printf("%-20s | %04d | %04d | %04d\n",
+            pSuite->pName,
+            pSuite->cases,
+            pSuite->succeeded,
+            pSuite->failed);
+    else if(SCU_runMode == SCU_RUN_MODE_VERBOSE)
+        printf("Suite '%s' => total of %d tests of which %d succeeded and %d failed\n",
+            pSuite->pName,
+            pSuite->cases,
+            pSuite->succeeded,
+            pSuite->failed);
+
+    if(pSuite->fpTearDown) {
+        SCU_TestSuite_printAction(pSuite, "Tear down", SCU_FALSE);
+        error = pSuite->fpTearDown();
+        SCU_printError(error);
+        if(SCU_FATAL_ERROR(error))
+            return (pSuite->result = error);
+    }
+    
+    pSuite->result = (pSuite->failed > 0) ? SCU_FAILED : SCU_SUCCESS;
+    return pSuite->result;
 }

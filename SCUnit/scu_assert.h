@@ -20,15 +20,14 @@
  *  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCUNIT_H
-#define SCUNIT_H
-
-#include <stdlib.h>
-#include <stdio.h>
+#ifndef SCU_ASSERT_H
+#define SCU_ASSERT_H
 
 #include "scu_types.h"
 #include "scu_errors.h"
-#include "scu_functions.h"
-#include "scu_assert.h"
+
+#define SCU_ASSERT(EQUATION, VALUE) SCU_assert(__LINE__, (EQUATION), #EQUATION, (unsigned long)(VALUE))
+
+extern SCU_error SCU_assert(int lineNo, SCU_bool assertion, const char *pMessage, unsigned long realValue);
 
 #endif

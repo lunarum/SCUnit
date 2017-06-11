@@ -25,19 +25,41 @@
 
 
 SCU_error test_setup() {
-    return SCU_SUCCES;
+    return SCU_SUCCESS;
 }
 
 SCU_error test_teardown() {
-    return SCU_SUCCES;
+    return SCU_SUCCESS;
 }
 
 SCU_error test_ok() {
-    return SCU_SUCCES;
+    SCU_error error;
+    int myVar = 42;
+    
+    error = SCU_ASSERT(myVar == 42, myVar);
+    
+    return error;
+}
+
+SCU_error test_struct() {
+    SCU_error error, err;
+    struct dummy { int var1, var2; } myVar1, myVar2;
+    
+    err = SCU_ASSERT(&myVar1 == &myVar2, &myVar1);
+    if(SCU_FATAL_ERROR(error))
+        return error;
+    error = SCU_ASSERT(&myVar1 != &myVar2, &myVar1);
+    
+    return error;
 }
 
 SCU_error test_failed() {
-    return SCU_ERROR_FAILED;
+    SCU_error error;
+    int myVar = 41;
+    
+    error = SCU_ASSERT(myVar > 100, myVar);
+    
+    return error;
 }
 
 int main(int argc, char **argv)
@@ -53,7 +75,7 @@ int main(int argc, char **argv)
 
     SCU_TestSuite *pSuite = SCU_TestSuite_create("Suite-1", NULL, NULL);
     SCU_TestCase_create(pSuite, "Case-11", test_ok, NULL, NULL);
-    SCU_TestCase_create(pSuite, "Case-12", test_ok, NULL, NULL);
+    SCU_TestCase_create(pSuite, "Case-12", test_struct, NULL, NULL);
     SCU_TestCase_create(pSuite, "Case-13", test_ok, test_setup, test_teardown);
     pSuite = SCU_TestSuite_create("Suite-2", test_setup, test_teardown);
     SCU_TestCase_create(pSuite, "Case-21", test_ok, NULL, NULL);

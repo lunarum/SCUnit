@@ -16,9 +16,9 @@ A unit test comprises of one or more <i>SCU_TestSuite</i> structs which are comp
 <li>SCU_RUN_MODE_VERBOSE (print everything of interrest).</li>
 </ul></p>
 <p>The result of every test is either a <i>SCU_SUCCESS</i> if everything went allright and all tests where succesfull, a <i>SCU_FAILED</i> if one or more tests failed or a negative error number, being some kind of <i>SCU_FATAL_ERROR()</i></p>
+<p>Test case functions must use the <i><b>SCU_ASSERT(EQUATION, VALUE)</b></i> macro for assertions. First parameter (EQUATIONS) is the assertion which must hold true. The second parameter (VALUE) is the value (variable) which is asserted. All values are cast to unsigned long and printed (if run mode is SCU_RUN_MODE_VERBOSE)</p>
 <hr/>
 <p>Copyright 2017 Remco van Maanen</p>
-<br>
 <p>SCUnit is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>SCUnit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License along with this program. (see file COPYING) If not, see <http://www.gnu.org/licenses/>.</p>

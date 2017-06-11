@@ -20,15 +20,25 @@
  *  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCUNIT_H
-#define SCUNIT_H
-
-#include <stdlib.h>
 #include <stdio.h>
-
-#include "scu_types.h"
-#include "scu_errors.h"
-#include "scu_functions.h"
 #include "scu_assert.h"
 
-#endif
+extern SCU_error SCU_assert(int lineNo, SCU_bool assertion, const char *pMessage, unsigned long realValue) {
+    if(SCU_currentTestCase == NULL || pMessage == NULL) {
+        return SCU_ERROR_NULL_POINTER;
+    }
+    if(SCU_runMode == SCU_RUN_MODE_VERBOSE) {
+        printf("ASSERT (%04d) %s (%lu) => %s\n",
+            lineNo,
+            pMessage,
+            realValue,
+            assertion ? "SUCCES" : "FAILED");
+    }
+    (SCU_currentTestCase->assertions)++;
+    if(assertion) {
+        (SCU_currentTestCase->succeeded)++;
+        return SCU_SUCCESS;
+    }
+    (SCU_currentTestCase->failed)++;
+    return SCU_FAILED;
+}

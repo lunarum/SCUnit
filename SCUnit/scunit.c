@@ -23,7 +23,9 @@
 #include "scunit.h"
 
 SCU_RunMode SCU_runMode = SCU_RUN_MODE_NORMAL;
-SCU_TestSuite *SCU_lastTestSuite = 0;
+SCU_TestSuite *SCU_lastTestSuite = NULL;
+SCU_TestSuite *SCU_currentTestSuite = NULL;
+SCU_TestCase *SCU_currentTestCase = NULL;
 
 
 void SCU_printError(SCU_error error) {
@@ -31,30 +33,31 @@ void SCU_printError(SCU_error error) {
         fprintf(stderr, "FATAL ERROR %d\n", error);
     else
         if(SCU_runMode == SCU_RUN_MODE_VERBOSE)
-            if(error == SCU_SUCCES)
+            if(error == SCU_SUCCESS)
                 printf("SUCCESS\n");
             else
                 printf("ERROR %d\n", error);
 }
 
 SCU_error SCU_executeAllTests() {
-    SCU_error error = SCU_SUCCES;
+    SCU_error error = SCU_SUCCESS;
     int cases = 0, succeeded = 0, failed = 0;
     
     if(SCU_lastTestSuite) {
         if(SCU_runMode == SCU_RUN_MODE_NORMAL)
             printf("Test Suite           | Cases| Succ | Fail\n"\
                    "---------------------+------+------+------\n");
-        SCU_TestSuite *pSuite = SCU_lastTestSuite;
+        SCU_currentTestSuite = SCU_lastTestSuite;
         do {
-            pSuite = pSuite->pNext;
-            error = SCU_TestSuite_execute(pSuite);
-            cases += pSuite->cases;
-            succeeded += pSuite->succeeded;
-            failed += pSuite->failed;
+            SCU_currentTestSuite = SCU_currentTestSuite->pNext;
+            error = SCU_TestSuite_execute(SCU_currentTestSuite);
+            cases += SCU_currentTestSuite->cases;
+            succeeded += SCU_currentTestSuite->succeeded;
+            failed += SCU_currentTestSuite->failed;
             if(SCU_FATAL_ERROR(error))
                 return error;
-        } while(pSuite != SCU_lastTestSuite);
+        } while(SCU_currentTestSuite != SCU_lastTestSuite);
+        SCU_currentTestSuite = NULL;
         if(SCU_runMode == SCU_RUN_MODE_NORMAL)
             printf("---------------------+------+------+------\n"\
                 "%-20s | %04d | %04d | %04d\n",
@@ -69,7 +72,7 @@ SCU_error SCU_executeAllTests() {
                 failed);
 
         if(failed > 0)
-            error = SCU_ERROR_FAILED;
+            error = SCU_FAILED;
     } else {
         SCU_printError(error = SCU_ERROR_NO_SUITES);
     }
