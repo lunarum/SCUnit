@@ -1,5 +1,5 @@
 # SCUnit
-Simple C Unittest framework
+<h2>Simple C Unittest framework</h2>
 
 <p>There are a lot of unittest frameworks, but I wanted a very simple one for my own projects (written in C). I've looked at a couple of other frameworks, most notably the <i>C Unit Testing Framework</i> (see http://cunit.sourceforge.net/index.html written by Anil Kumar, John Pye and Martin Gerhardy). But I didn't find the right (simple!)  one for me, so decided to write my own :).</p>
 <p>The SCUnit framework is build around two "classes":
@@ -18,7 +18,12 @@ A unit test comprises of one or more <i>SCU_TestSuite</i> structs which are comp
 <p>The result of every test is either a <i>SCU_SUCCESS</i> if everything went allright and all tests where succesfull, a <i>SCU_FAILED</i> if one or more tests failed or a negative error number, being some kind of <i>SCU_FATAL_ERROR()</i></p>
 <p>Test case functions must use the <i><b>SCU_ASSERT(EQUATION, VALUE)</b></i> macro for assertions. First parameter (EQUATIONS) is the assertion which must hold true. The second parameter (VALUE) is the value (variable) which is asserted. All values are cast to unsigned long and printed (if run mode is SCU_RUN_MODE_VERBOSE)</p>
 <hr/>
+<h2>Build environment</h2>
+<p>I use CodeLite (see https://codelite.org/) as the development environment. After installation, use CodeLite to download and install the GNU C compiler suite (gcc - Mingw). After installing open the .workspace file in the root of the sources. SCUnit is the library project, SCUnitTest a simple test example.</p>
+<hr/>
+<h2>Copyright</h2>
 <p>Copyright 2017 Remco van Maanen</p>
-<p>SCUnit is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<br/>
+<p><b>SCUnit is free software:</p> you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
 <p>SCUnit is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.</p>
 <p>You should have received a copy of the GNU General Public License along with this program. (see file COPYING) If not, see <http://www.gnu.org/licenses/>.</p>
