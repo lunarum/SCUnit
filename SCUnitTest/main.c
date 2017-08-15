@@ -42,10 +42,10 @@ SCU_error test_ok() {
 }
 
 SCU_error test_struct() {
-    SCU_error error, err;
+    SCU_error error;
     struct dummy { int var1, var2; } myVar1, myVar2;
     
-    err = SCU_ASSERT(&myVar1 == &myVar2, &myVar1);
+    error = SCU_ASSERT(&myVar1 == &myVar2, &myVar1);
     if(SCU_FATAL_ERROR(error))
         return error;
     error = SCU_ASSERT(&myVar1 != &myVar2, &myVar1);

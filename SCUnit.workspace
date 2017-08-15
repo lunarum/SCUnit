@@ -3,7 +3,7 @@
   <Project Name="SCUnit" Path="SCUnit/SCUnit.project" Active="No"/>
   <Project Name="SCUnitTest" Path="SCUnitTest/SCUnitTest.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="yes">
+    <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>
       <Project Name="SCUnit" ConfigName="Debug"/>
       <Project Name="SCUnitTest" ConfigName="Debug"/>
