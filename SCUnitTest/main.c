@@ -69,6 +69,8 @@ int main(int argc, char **argv)
     for(int n = 1; n < argc; ++n) {
         if(strcmp(argv[n], "-v") == 0 || strcmp(argv[n], "-verbose") == 0)
             SCU_runMode = SCU_RUN_MODE_VERBOSE;
+        else if(strcmp(argv[n], "-f") == 0 || strcmp(argv[n], "-failed") == 0)
+            SCU_runMode = SCU_RUN_MODE_FAILED;
         else if(strcmp(argv[n], "-s") == 0 || strcmp(argv[n], "-silent") == 0)
             SCU_runMode = SCU_RUN_MODE_SILENT;
     }

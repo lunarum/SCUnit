@@ -50,6 +50,8 @@ SCU_error SCU_executeAllTests() {
         SCU_currentTestSuite = SCU_lastTestSuite;
         do {
             SCU_currentTestSuite = SCU_currentTestSuite->pNext;
+            if(SCU_runMode == SCU_RUN_MODE_FAILED)
+                printf("Test Suite '%s'\n", SCU_currentTestSuite->pName);
             error = SCU_TestSuite_execute(SCU_currentTestSuite);
             cases += SCU_currentTestSuite->cases;
             succeeded += SCU_currentTestSuite->succeeded;
@@ -65,8 +67,8 @@ SCU_error SCU_executeAllTests() {
                 cases,
                 succeeded,
                 failed);
-        else if(SCU_runMode == SCU_RUN_MODE_VERBOSE)
-            printf("Unit test composed of %d tests of which %d succeeded and %d failed\n",
+        else if(SCU_runMode == SCU_RUN_MODE_VERBOSE || SCU_runMode == SCU_RUN_MODE_FAILED)
+            printf("Unit test composed of %d testcases of which %d succeeded and %d failed\n",
                 cases,
                 succeeded,
                 failed);

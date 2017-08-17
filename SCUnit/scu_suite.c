@@ -96,7 +96,7 @@ SCU_error SCU_TestSuite_execute(SCU_TestSuite *pSuite) {
             pSuite->succeeded,
             pSuite->failed);
     else if(SCU_runMode == SCU_RUN_MODE_VERBOSE)
-        printf("Suite '%s' => total of %d tests of which %d succeeded and %d failed\n",
+        printf("Suite '%s' => total of %d testcases of which %d succeeded and %d failed\n",
             pSuite->pName,
             pSuite->cases,
             pSuite->succeeded,

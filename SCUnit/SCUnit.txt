@@ -1,1 +1,1 @@
-./Debug/scu_test.c.o ./Debug/scu_suite.c.o ./Debug/scunit.c.o ./Debug/scu_assert.c.o   
+./Release/scu_test.c.o ./Release/scu_suite.c.o ./Release/scunit.c.o ./Release/scu_assert.c.o   

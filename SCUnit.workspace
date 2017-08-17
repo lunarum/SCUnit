@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Workspace Name="SCUnit" Database="" Version="10.0.0">
-  <Project Name="SCUnit" Path="SCUnit/SCUnit.project" Active="No"/>
-  <Project Name="SCUnitTest" Path="SCUnitTest/SCUnitTest.project" Active="Yes"/>
+  <Project Name="SCUnit" Path="SCUnit/SCUnit.project" Active="Yes"/>
+  <Project Name="SCUnitTest" Path="SCUnitTest/SCUnitTest.project" Active="No"/>
   <BuildMatrix>
     <WorkspaceConfiguration Name="Debug" Selected="no">
       <Environment/>

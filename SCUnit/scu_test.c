@@ -83,6 +83,11 @@ SCU_error SCU_TestCase_execute(SCU_TestCase *pTestCase) {
             pTestCase->assertions,
             pTestCase->succeeded,
             pTestCase->failed);
+    else if(SCU_runMode == SCU_RUN_MODE_FAILED && pTestCase->failed > 0)
+        printf("\tCase '%s' FAILED %d assertions out of %d\n",
+            pTestCase->pName,
+            pTestCase->failed,
+            pTestCase->assertions);
     SCU_TestCase_printAction(pTestCase, "Result", SCU_FALSE);
     SCU_printError(error);
     if(SCU_FATAL_ERROR(error))

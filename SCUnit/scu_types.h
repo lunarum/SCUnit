@@ -61,6 +61,7 @@ typedef struct SCU_TestSuite {
 typedef enum {
     SCU_RUN_MODE_SILENT,    /* silent; no output */
     SCU_RUN_MODE_NORMAL,    /* default mode, print only test suite results */
+    SCU_RUN_MODE_FAILED,    /* print all failed tests and a resume */
     SCU_RUN_MODE_VERBOSE    /* print everything worth printing */
 } SCU_RunMode;
 
